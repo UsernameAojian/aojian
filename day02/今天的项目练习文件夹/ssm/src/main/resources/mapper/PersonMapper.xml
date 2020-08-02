@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.PersonMapper">
+  <resultMap id="PersonResultMap" type="com.xiaoshu.entity.Person">
+    <id column="id" jdbcType="INTEGER" property="pid" />
+    <result column="express_name" jdbcType="VARCHAR" property="expressName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="express_trait" jdbcType="VARCHAR" property="expressTrait" />
+    <result column="entry_time" jdbcType="DATE" property="entryTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="express_type_id" jdbcType="INTEGER" property="expressTypeId" />
+    <association property="company" javaType="com.xiaoshu.entity.Company">
+    	<id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="express_name" jdbcType="VARCHAR" property="expressName1" />
+	    <result column="status" jdbcType="VARCHAR" property="status" />
+	    <result column="createTime" jdbcType="VARCHAR" property="createTime" />
+    </association>
+  </resultMap>
+  
+  
+  
+  <select id="findPerson" parameterType="person"  resultType="queryVO">
+  		SELECT p.*,c.express_name AS expressName1 FROM express_person p,express_company	c 
+  		<where>
+  			p.express_type_id=c.id 
+  			<if test="expressName!='' and expressName!=null">
+  				and p.express_name like '%${expressName}%'
+  			</if>
+  		</where>
+  		 
+  </select>
+</mapper>
