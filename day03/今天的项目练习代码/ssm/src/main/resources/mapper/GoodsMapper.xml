@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Goods">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="t_id" jdbcType="INTEGER" property="tId" />
+  </resultMap>
+  
+  
+  <select id="findGoods" resultType="QueryVoGoods" parameterType="QueryVoGoods">
+  		SELECT t.*,g.* FROM tb_goodstype t,tb_goods g 
+  		<where>
+  			t.t_id=g.t_id
+  			<if test="name!='' and name!=null">
+  				and g.name like '%${name}%'
+  			</if>
+  			<if test="tId!='' and tId!=null">
+  				and t.t_id=#{tId}
+  			</if>
+  			order by g.g_id asc
+  		</where>
+  </select>
+</mapper>
