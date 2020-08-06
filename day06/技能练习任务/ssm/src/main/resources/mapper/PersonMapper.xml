@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.xiaoshu.entity.Person">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="express_name" jdbcType="VARCHAR" property="expressName1" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="express_trait" jdbcType="VARCHAR" property="expressTrait" />
+    <result column="entry_time" jdbcType="DATE" property="entryTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="express_type_id" jdbcType="INTEGER" property="expressTypeId" />
+  </resultMap>
+  
+  <select id="findPerson" resultType="PersonVo" parameterType="PersonVo">
+  	  	SELECT p.*,c.express_name expressName1 FROM express_company c,express_person p 
+  	  	<where>
+  	  		c.id=p.express_type_id
+  	  		<if test="expressName!=null and expressName!=''">
+			and p.express_name like '%${expressName}%'
+			</if>
+			<if test="expressTypeId!=null and expressTypeId!=0">
+			and p.express_type_id = #{expressTypeId}
+			</if>
+  	  	</where>
+  </select>
+</mapper>
